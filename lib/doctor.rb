@@ -1,10 +1,7 @@
-require File.join(File.dirname(__FILE__), 'handlers/aggregation_server_down_handler')
-require File.join(File.dirname(__FILE__), 'handlers/unicorn_down_handler')
-
 class Doctor
   @@handlers = [
-    AggregationServerDownHandler,
-    UnicornDownHandler
+    Handlers::AggregationServerDownHandler,
+    Handlers::UnicornDownHandler
   ]
 
   class << self

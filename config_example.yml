@@ -1,0 +1,6 @@
+mail:
+  address: "imap.gmail.com"
+  port: 993
+  user_name: 'test@example.com'
+  password: 'password'
+  enable_ssl: true
