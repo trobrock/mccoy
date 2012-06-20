@@ -1,35 +1,35 @@
-require File.join(File.dirname(__FILE__), 'handlers/aggregation_server_down_handler')
-
 class Handler
-  @@handlers = [
-    AggregationServerDownHandler
-  ]
-
   class << self
-    def run(errors)
-      error_messages(errors).each do |error|
-        ap handler_for(error)
-      end
+    def match(regex)
+      class_eval <<-EVAL
+        def self.match?(error)
+          !!error.match("#{regex}")
+        end
+      EVAL
     end
 
-    def handlers
-      @@handlers
-    end
+    def search(options={})
+      search_string = []
+      options.each do |type, string|
+        type = type.to_s.upcase
 
-    private
-
-    def error_messages(errors)
-      errors.
-        map { |error| error.multipart? ? error.parts[0] : error }.
-        map { |error| error.body.decoded }
-    end
-
-    def handler_for(error)
-      handler = @@handlers.detect do |handler|
-        handler.match? error
+        string.split(" ").each do |word|
+          search_string << [type, word].join(" ")
+        end
       end
 
-      handler.new(error)
+      search_string = search_string.join(" ")
+
+      class_eval <<-EVAL
+        def self.search
+          "#{search_string}"
+        end
+      EVAL
     end
   end
+
+  def initialize(error)
+    @error = error
+  end
+
 end

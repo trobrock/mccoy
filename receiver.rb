@@ -2,7 +2,7 @@ class Receiver
   def self.receive(since)
     errors = []
 
-    Handler.handlers.each do |handler|
+    Doctor.handlers.each do |handler|
       search = [handler.search, "SINCE #{since.strftime("%d-%b-%Y")}"].join(" ")
       errors << Mail.find(:what => :first, :order => :desc, :keys => search)
     end

@@ -1,13 +1,8 @@
-class AggregationServerDownHandler
-  def self.match?(error)
-    !!error.match(/Trigger: Aggregation Server(.*)Trigger status: PROBLEM/m)
-  end
+class AggregationServerDownHandler < Handler
+  match  /Trigger: Aggregation Server(.*)Trigger status: PROBLEM/m
+  search :subject => "PROBLEM Aggregation"
 
-  def self.search
-    "SUBJECT PROBLEM SUBJECT Aggregation"
-  end
-
-  def initialize(error)
-    @error = error
+  def fix!
+    p "cap production thrift:start"
   end
 end
