@@ -3,7 +3,7 @@ class Handler
     def match(regex)
       class_eval <<-EVAL
         def self.match?(error)
-          !!error.match("#{regex}")
+          !!error.match(#{regexp_to_string(regex)})
         end
       EVAL
     end
@@ -25,6 +25,34 @@ class Handler
           "#{search_string}"
         end
       EVAL
+    end
+
+    def data(options={})
+      options.each do |name, matcher|
+        class_eval <<-EVAL
+          def #{name}
+            regex = #{regexp_to_string(matcher)}
+            matches = @error.match(regex).captures
+
+            matches.size == 1 ? matches.first : matches
+          end
+        EVAL
+      end
+    end
+
+    def application(app)
+      puts <<-MSG
+        This needs implemented.
+        It should define the folder for the application to run commands
+        against, and it should ensure the code is up to date. Maybe this
+        should map to an application object that knows these things.
+      MSG
+    end
+
+    private
+
+    def regexp_to_string(regex)
+      "Regexp.new('#{regex.source}', #{regex.options})"
     end
   end
 
