@@ -1,0 +1,4 @@
+outright:
+  path: "applications/outright"
+aggregation:
+  path: "applications/aggregation"

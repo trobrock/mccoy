@@ -6,7 +6,7 @@ module Handlers
     application :aggregation
 
     def fix!
-      p "cap production thrift:start on #{self.server}"
+      p "app: #{self.application} :: cap production thrift:start on #{self.server}"
     end
   end
 end

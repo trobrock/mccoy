@@ -6,7 +6,7 @@ module Handlers
     application :outright
 
     def fix!
-      p "cap production unicorn:restart on #{self.server}"
+      p "app: #{self.application} :: cap production unicorn:restart on #{self.server}"
     end
   end
 end

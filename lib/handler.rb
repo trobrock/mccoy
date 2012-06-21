@@ -41,12 +41,11 @@ class Handler
     end
 
     def application(app)
-      puts <<-MSG
-        This needs implemented.
-        It should define the folder for the application to run commands
-        against, and it should ensure the code is up to date. Maybe this
-        should map to an application object that knows these things.
-      MSG
+      class_eval <<-EVAL
+        def application
+          @application ||= ExternalApplication.instance(:#{app})
+        end
+      EVAL
     end
 
     private
