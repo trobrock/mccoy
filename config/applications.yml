@@ -1,4 +1,8 @@
 outright:
-  path: "applications/outright"
+  scm: "git"
+  branch: "master"
+  repo: "outright/aggregation"
 aggregation:
-  path: "applications/aggregation"
+  scm: "git"
+  branch: "master"
+  repo: "outright/aggregation"
