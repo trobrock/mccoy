@@ -5,8 +5,8 @@ module Handlers
     data        :server => /\(acc-([a-z0-9]+):/i
     application :outright
 
-    def fix!
-      p "app: #{self.application} :: cap production unicorn:restart on #{self.server}"
+    fix do
+      p "app: #{self.application} :: cap production thrift:start on #{self.server}"
     end
   end
 end

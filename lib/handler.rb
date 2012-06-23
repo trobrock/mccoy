@@ -1,5 +1,13 @@
+class FailedCheck < StandardError ; end
+
 class Handler
+  @@fixes = []
+
   class << self
+    def fixes
+      @@fixes
+    end
+
     def match(regex)
       class_eval <<-EVAL
         def self.match?(error)
@@ -48,6 +56,16 @@ class Handler
       EVAL
     end
 
+    def fix(&block)
+      @@fixes << block
+
+      class_eval <<-EVAL
+        def fix!
+          self.instance_eval &self.class.fixes[#{@@fixes.size-1}]
+        end
+      EVAL
+    end
+
     private
 
     def regexp_to_string(regex)
@@ -57,6 +75,11 @@ class Handler
 
   def initialize(error)
     @error = error
+  end
+
+  def check(msg, &block)
+    result = yield
+    raise FailedCheck.new(msg) unless result
   end
 
 end
