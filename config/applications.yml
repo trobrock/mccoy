@@ -1,7 +1,7 @@
 outright:
   scm: "git"
   branch: "master"
-  repo: "outright/aggregation"
+  repo: "outright/outright"
 aggregation:
   scm: "git"
   branch: "master"
